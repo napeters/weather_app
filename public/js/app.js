@@ -149,7 +149,7 @@ function WeatherController($http){
     self.waiting = true;
     $http
       .get('https://api.aerisapi.com/forecasts/closest?p=' +
-            self.inputCity + '&from=today&to=today&client_id=process.env.WEATHER_ID&client_secret=process.env.WEATHER_SECRET')
+            self.inputCity + '&from=today&to=today&client_id=RJtYUCLVJre7MGQmDzVth&client_secret=ll2C8gxAYx51cPoUTqBy3OfaXtDgsf1bJmefjNjt')
       .then(function(response){
         if (response.data.error) {
           self.waiting = false;
@@ -173,6 +173,7 @@ function WeatherController($http){
       .get('https://api.aerisapi.com/forecasts/closest?p=' +
             self.currentLatitude + ',' + self.currentLongitude + '&from=today&to=today&client_id=RJtYUCLVJre7MGQmDzVth&client_secret=ll2C8gxAYx51cPoUTqBy3OfaXtDgsf1bJmefjNjt')
       .then(function(response){
+        console.log(response);
         self.waiting = false;
         self.error = null;
         self.haveWeather = true;
