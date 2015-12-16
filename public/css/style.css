@@ -4,7 +4,11 @@ nav {
   padding-right: 30px;
 }
 
-.weather-info, .error, .waiting-gif, .form-container {
+.landscape-container {
+  display: none;
+}
+
+.portrait-container {
   display: inline-block;
 }
 

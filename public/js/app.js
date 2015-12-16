@@ -7,6 +7,9 @@ WeatherController.$inject = ['$http'];
 function WeatherController($http){
   let self = this;
 
+  self.tilt = 0;
+  self.landscape = null,
+  self.portrait = true,
   self.newUser = {},
   self.loggingInUser = {},
   self.currentUser = {},
@@ -26,6 +29,8 @@ function WeatherController($http){
         self.loggingInUser = {};
         self.login = false;
         self.haveWeather = true;
+        self.loginText = 'Log out';
+        self.signupText = self.currentUser.user_name;
       });
   },
   self.signup = false,
@@ -57,11 +62,53 @@ function WeatherController($http){
   self.highTemp = null,
   self.lowTemp = null,
   self.descriptionTemp = '',
+  self.getOrientation = function() {
+    let deviceOrientationHandler = function(tilt) {
+      if (tilt > 80 && tilt < 100) {
+        self.portrait = false;
+        self.landscape = true;
+        document.getElementsByClassName("portrait-container")[0].style.display = "none";
+        document.getElementsByClassName("landscape-container")[0].style.display = "inline-block";
+        document.getElementsByClassName("landscape-container")[0].style.webkitTransform = "rotate(-90deg)";
+      } else if (tilt < -80 && tilt > -100) {
+        self.portrait = false;
+        self.landscape = true;
+        document.getElementsByClassName("portrait-container")[0].style.display = "none";
+        document.getElementsByClassName("landscape-container")[0].style.display = "inline-block";
+        document.getElementsByClassName("landscape-container")[0].style.webkitTransform = "rotate(90deg)";
+      } else {
+        self.landscape = false;
+        self.portrait = true;
+        document.body.style.webkitTransform = "";
+        document.getElementsByClassName("landscape-container")[0].style.display = "none";
+        document.getElementsByClassName("portrait-container")[0].style.display = "inline-block";
+      }
+    };
+    window.addEventListener('deviceorientation', function(eventData) {
+      let tilt = eventData.gamma;
+      self.tilt = tilt;
+      deviceOrientationHandler(tilt);
+    }, false);
+  },
+  self.listenToLocation = function() {
+    let recognition = new webkitSpeechRecognition();
+    recognition.continuous = true;
+    recognition.interimResults = true;
+    recognition.onresult = function(event) {
+      document.getElementById("listen").innerHTML = event.results[0][0].transcript;
+      if (event.results[0].isFinal) {
+        self.inputCity = event.results[0][0].transcript;
+        self.addLocation();
+      }
+    }
+    recognition.start();
+  },
   self.getLocation = function() {
     let success = function(pos) {
       self.currentLatitude = pos.coords.latitude;
       self.currentLongitude = pos.coords.longitude;
       self.getCity();
+      self.getOrientation();
     }
     navigator.geolocation.getCurrentPosition(success);
   },
