@@ -171,7 +171,7 @@ function WeatherController($http){
   self.getWeather = function() {
     $http
       .get('https://api.aerisapi.com/forecasts/closest?p=' +
-            self.currentLatitude + ',' + self.currentLongitude + '&from=today&to=today&client_id=RJtYUCLVJre7MGQmDzVth&client_secret=ll2C8gxAYx51cPoUTqBy3OfaXtDgsf1bJmefjNjt')
+            self.currentLatitude + ',' + self.currentLongitude + '&from=today&to=today&client_id=RJtYUCLVJre7MGQmDzVth&client_secret=gDvmiFtTVvrE3BDxA29ChcKMcpmn58AdgE6nYKGS')
       .then(function(response){
         console.log(response);
         self.waiting = false;
