@@ -26,4 +26,6 @@ app.use('/scripts', express.static(__dirname + '/node_modules'));
 
 
 let userRoutes = require('./routes/userRoutes');
+let locationRoutes = require('./routes/locationRoutes');
 app.use('/user', userRoutes);
+app.use('/location', locationRoutes);

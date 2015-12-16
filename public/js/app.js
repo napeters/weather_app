@@ -13,6 +13,7 @@ function WeatherController($http){
   self.newUser = {},
   self.loggingInUser = {},
   self.currentUser = {},
+  self.currentUserLocations = [],
   self.login = false,
   self.loginText = 'Log in',
   self.loginAction = function() {
@@ -31,6 +32,8 @@ function WeatherController($http){
         self.haveWeather = true;
         self.loginText = 'Log out';
         self.signupText = self.currentUser.user_name;
+        self.createLocation();
+        self.getCurrentUserLocations();
       });
   },
   self.signup = false,
@@ -161,6 +164,7 @@ function WeatherController($http){
           self.feelsLikeTemp = response.data.response[0].periods[0].feelslikeF;
           self.highTemp = response.data.response[0].periods[0].maxTempF;
           self.lowTemp = response.data.response[0].periods[0].minTempF;
+          self.createLocation();
         }
       });
   },
@@ -184,6 +188,30 @@ function WeatherController($http){
         // console.log(response.data.response[0].periods[0].pop);
         // console.log(response.data.response[0].periods[0].precipIN);
         // console.log(response.data.response[0].periods[0].windSpeedMaxMPH);
+      });
+  },
+  self.createLocation = function() {
+    $http
+      .post('http://localhost:5000/location', {
+        _userId: self.currentUser._id,
+        city_state: self.currentCity,
+        lat: self.currentLatitude,
+        lng: self.currentLongitude
+      })
+      .then(function(response) {
+        self.currentUserLocations.push(response.data.city_state);
+      });
+  },
+  self.getCurrentUserLocations = function() {
+    $http
+      .get('http://localhost:5000/location')
+      .then(function(response) {
+        let allLocations = response.data;
+        allLocations.forEach(function(location) {
+          if (self.currentUserLocations.indexOf(location.city_state) == -1) {
+            self.currentUserLocations.push(location.city_state);
+          }
+        });
       });
   }
 }
