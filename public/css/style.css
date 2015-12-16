@@ -1,0 +1,14 @@
+nav {
+  display: inline-block;
+  vertical-align: top;
+  padding-right: 30px;
+}
+
+.weather-info, .error, .waiting-gif, .form-container {
+  display: inline-block;
+}
+
+img {
+  display: block;
+  margin: 0 auto;
+}

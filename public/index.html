@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html ng-app="WeatherApp">
+  <head>
+    <meta charset="utf-8">
+    <title>Weather</title>
+    <link rel="stylesheet" type="text/css" href="./css/style.css">
+    <script src="scripts/angular/angular.js"></script>
+    <script src="./js/app.js"></script>
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyD1kBmWqUvLjdJTjIJw6sYccbKwubjhYmA&signed_in=true"
+    async defer></script>
+  </head>
+  <body ng-controller="WeatherController as weather" ng-init="weather.getLocation()">
+
+    <nav>
+      <button ng-click="weather.signupAction()">{{weather.signupText}}</button><br>
+      <button ng-click="weather.loginAction()">{{weather.loginText}}</button>
+      <form ng-submit="weather.addLocation()" method="get">
+        <input class="" type="text" placeholder="i.e., New York, NY" ng-model="weather.inputCity"><br>
+        <input class="" type="submit" value="Check">
+      </form>
+    </nav>
+
+    <div class="form-container">
+      <div class="form-login" ng-show="weather.login">
+        <h1>Login</h1>
+        <form ng-submit="weather.loginUser()" ng-show="weather.login" method="post">
+          <input class="email" type="text" placeholder="Email" ng-model="weather.loggingInUser.email"><br>
+          <input class="password" type="password" placeholder="Password" ng-model="weather.loggingInUser.password"><br>
+          <input class="submit-login" type="submit" value="Submit">
+        </form>
+      </div>
+      <div class="form-signup" ng-show="weather.signup">
+        <h1>Signup</h1>
+        <form ng-submit="weather.signupUser()" ng-show="weather.signup" method="post">
+          <input class="user-name" type="text" placeholder="Username" ng-model="weather.newUser.user_name"><br>
+          <input class="email" type="text" placeholder="Email" ng-model="weather.newUser.email"><br>
+          <input class="password" type="password" placeholder="Password" ng-model="weather.newUser.password"><br>
+          <input class="submit-signup" type="submit" value="Submit">
+        </form>
+      </div>
+    </div>
+
+    <div ng-show="weather.waiting" class="waiting-gif">
+      <p>Grabbing your current weather information</p>
+      <img src="https://www.hashfav.com/assets/img/spinningWheel.gif">
+    </div>
+    <div ng-show="weather.error" class="error">
+      <p>{{weather.error}}
+    </div>
+    <div ng-show="weather.haveWeather" class="weather-info">
+      <p>{{weather.currentCity}}</p>
+      <p>Feels like: {{weather.feelsLikeTemp}}</p>
+      <p>High: {{weather.highTemp}}</p>
+      <p>Low: {{weather.lowTemp}}</p>
+      <p>{{weather.descriptionTemp}}</p>
+    </div>
+
+  </body>
+</html>
