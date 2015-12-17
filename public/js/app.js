@@ -24,7 +24,7 @@ function WeatherController($http){
   },
   self.loginUser = function() {
     $http
-      .post('http://localhost:5000/user/login', self.loggingInUser)
+      .post('https://localhost:5000/user/login', self.loggingInUser)
       .then(function(response){
         self.currentUser = response.data.currentUser;
         self.loggingInUser = {};
