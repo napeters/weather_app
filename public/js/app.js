@@ -24,7 +24,7 @@ function WeatherController($http){
   },
   self.loginUser = function() {
     $http
-      .post('https://localhost:5000/user/login', self.loggingInUser)
+      .post('http://localhost:5000/user/login', self.loggingInUser)
       .then(function(response){
         self.currentUser = response.data.currentUser;
         self.loggingInUser = {};
@@ -46,7 +46,7 @@ function WeatherController($http){
   },
   self.signupUser = function() {
     $http
-      .post('https://localhost:5000/user/signup', self.newUser)
+      .post('http://localhost:5000/user/signup', self.newUser)
       .then(function(response){
         self.currentUser = response.data.currentUser;
         self.newUser = {};
