@@ -46,7 +46,7 @@ function WeatherController($http){
   },
   self.signupUser = function() {
     $http
-      .post('http://localhost:5000/user/signup', self.newUser)
+      .post('https://localhost:5000/user/signup', self.newUser)
       .then(function(response){
         self.currentUser = response.data.currentUser;
         self.newUser = {};
