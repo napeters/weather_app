@@ -3,6 +3,7 @@
   <head>
     <meta charset="utf-8">
     <title>Weather</title>
+    <link href='https://fonts.googleapis.com/css?family=Nunito|PT+Serif' rel='stylesheet' type='text/css'>
     <link rel="stylesheet" type="text/css" href="./css/style.css">
     <script src="scripts/angular/angular.js"></script>
     <script src="./js/app.js"></script>
@@ -15,8 +16,10 @@
       <button ng-click="weather.signupAction()">{{weather.signupText}}</button><br>
       <button ng-click="weather.loginAction()">{{weather.loginText}}</button>
       <form ng-submit="weather.addLocation()" method="get">
-        <input class="" type="text" placeholder="i.e., New York, NY" ng-model="weather.inputCity"><br>
-        <a ng-click="weather.listenToLocation()">(or talk)</a><br>
+        <input class="" type="text" placeholder="i.e., New York, NY" ng-model="weather.inputCity">
+        <img ng-click="weather.listenToLocation()"
+          src="http://www.clipartsheep.com/images/77/there-is-39-logo-speech-bubble-free-cliparts-all-used-for-clipart.png"
+          class="talking-bubble"><br>
         <input class="" type="submit" value="Check">
       </form>
       <div ng-repeat="location in weather.currentUserLocations">
@@ -50,20 +53,22 @@
         </div>
       </div>
 
-      <div ng-show="weather.waiting" class="waiting-gif">
+      <div ng-show="weather.waiting" class="waiting">
         <p>Grabbing your current weather information</p>
-        <img src="http://www.istandwith.com/images/ellipsis.gif">
+        <img src="http://www.istandwith.com/images/ellipsis.gif" class="gif">
       </div>
       <div ng-show="weather.error" class="error">
         <p>{{weather.error}}
       </div>
-      <div ng-show="weather.haveWeather" class="weather-info">
+      <div ng-show="weather.voice" class="voice-transcription">
         <p id="listen"></p>
-        <p>{{weather.currentCity}}</p>
+      </div>
+      <div ng-show="weather.haveWeather" class="weather-info">
+        <p id="city">{{weather.currentCity}}</p>
         <p>Feels like: {{weather.feelsLikeTemp}}</p>
         <p>High: {{weather.highTemp}}</p>
         <p>Low: {{weather.lowTemp}}</p>
-        <p>{{weather.descriptionTemp}}</p>
+        <p id="description">{{weather.descriptionTemp}}</p>
       </div>
     </div>
 

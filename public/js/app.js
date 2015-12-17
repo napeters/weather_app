@@ -59,6 +59,7 @@ function WeatherController($http){
   self.currentCity = '',
   self.inputCity = '',
   self.waiting = true,
+  self.voice = false,
   self.error = null,
   self.haveWeather = false,
   self.feelsLikeTemp = null,
@@ -94,10 +95,18 @@ function WeatherController($http){
     }, false);
   },
   self.listenToLocation = function() {
+    self.error = false;
+    self.login = false;
+    self.signup = false;
+    self.haveWeather = false;
+    self.waiting = false;
+    self.voice = true;
+    document.getElementById("listen").innerHTML = "All ears...";
     let recognition = new webkitSpeechRecognition();
     recognition.continuous = true;
     recognition.interimResults = true;
     recognition.onresult = function(event) {
+      document.getElementById("listen").style.textDecoration = "underline";
       document.getElementById("listen").innerHTML = event.results[0][0].transcript;
       if (event.results[0].isFinal) {
         self.inputCity = event.results[0][0].transcript;
@@ -143,6 +152,9 @@ function WeatherController($http){
     });
   },
   self.addLocation = function(location) {
+    document.getElementById("listen").innerHTML = '';
+    document.getElementById("listen").style.textDecoration = "none";
+    self.voice = false;
     self.error = false;
     self.login = false;
     self.signup = false;
@@ -163,9 +175,9 @@ function WeatherController($http){
           self.haveWeather = true;
           self.currentCity = self.inputCity.toUpperCase();
           self.inputCity = '';
-          self.feelsLikeTemp = response.data.response[0].periods[0].feelslikeF;
-          self.highTemp = response.data.response[0].periods[0].maxTempF;
-          self.lowTemp = response.data.response[0].periods[0].minTempF;
+          self.feelsLikeTemp = response.data.response[0].periods[0].feelslikeF + '°';
+          self.highTemp = response.data.response[0].periods[0].maxTempF + '°';
+          self.lowTemp = response.data.response[0].periods[0].minTempF + '°';
           if (self.currentUser ) {self.createLocation()};
         }
       });
@@ -178,9 +190,9 @@ function WeatherController($http){
         self.waiting = false;
         self.error = null;
         self.haveWeather = true;
-        self.feelsLikeTemp = response.data.response[0].periods[0].feelslikeF;
-        self.highTemp = response.data.response[0].periods[0].maxTempF;
-        self.lowTemp = response.data.response[0].periods[0].minTempF;
+        self.feelsLikeTemp = response.data.response[0].periods[0].feelslikeF + '°';
+        self.highTemp = response.data.response[0].periods[0].maxTempF + '°';
+        self.lowTemp = response.data.response[0].periods[0].minTempF + '°';
         self.descriptionTemp = response.data.response[0].periods[0].weather;
         self.currentLatitude = response.data.response[0].loc.lat;
         self.currentLongitude = response.data.response[0].loc.long;

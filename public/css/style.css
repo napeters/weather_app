@@ -1,7 +1,12 @@
+body {
+  background: #009ACD;
+}
+
 nav {
   display: inline-block;
   vertical-align: top;
   padding-right: 30px;
+  background: lightgray;
 }
 
 .landscape-container {
@@ -10,9 +15,50 @@ nav {
 
 .portrait-container {
   display: inline-block;
+  width: 80%;
+  text-align: center;
 }
 
-img {
+#listen {
+  font-size: 60px;
+  color: darkgray;
+}
+
+.waiting, .error {
+  font-family: 'PT Serif', serif;
+  font-size: 50px;
+  color: darkgray;
+  width: 60%;
+  text-align: center;
+  margin: 0 auto;
+}
+
+.weather-info {
+  font-family: 'PT Serif', serif;
+  font-size: 60px;
+}
+
+#city {
+  color: darkgray;
+  line-height: 30px;
+}
+
+.weather-info > p {
+  color: seashell;
+  line-height: 15px;
+}
+
+#description {
+  font-style: italic;
+}
+
+.gif {
   display: block;
   margin: 0 auto;
+}
+
+.talking-bubble {
+  width: 30px;
+  height: 20px;
+  vertical-align: middle;
 }
