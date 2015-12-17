@@ -78,3 +78,7 @@ nav {
   height: 20px;
   vertical-align: middle;
 }
+
+.saved-location, .delete-location {
+  display: inline-block;
+}

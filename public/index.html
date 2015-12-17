@@ -23,8 +23,8 @@
         <input class="" type="submit" value="Check">
       </form>
       <div ng-repeat="location in weather.currentUserLocations">
-        <p ng-click="weather.addLocation(location)" method="get">{{location}}</p>
-        <a ng-click="weather.deleteLocation(location)">X</a>
+        <p ng-click="weather.addLocation(location)" method="get" class="saved-location">{{location}}</p>
+        <a ng-click="weather.deleteLocation(location)" class="delete-location">(X)</a>
       </div>
     </nav>
 
@@ -56,7 +56,7 @@
 
       <div ng-show="weather.waiting" class="waiting">
         <p>Grabbing your current weather information</p>
-        <img src="https://www.istandwith.com/images/ellipsis.gif" class="gif">
+        <img src="http://www.istandwith.com/images/ellipsis.gif" class="gif">
       </div>
       <div ng-show="weather.error" class="error">
         <p>{{weather.error}}
