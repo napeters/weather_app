@@ -66,23 +66,31 @@ function WeatherController($http){
   self.highTemp = null,
   self.lowTemp = null,
   self.descriptionTemp = '',
+  self.word = '';
+  self.wordDefinition = '';
   self.getOrientation = function() {
     let deviceOrientationHandler = function(tilt) {
       if (tilt > 80 && tilt < 100) {
         self.portrait = false;
         self.landscape = true;
+        document.getElementsByTagName('nav')[0].style.display = "none";
+        document.body.style.background = "#4CCEAD";
         document.getElementsByClassName("portrait-container")[0].style.display = "none";
         document.getElementsByClassName("landscape-container")[0].style.display = "inline-block";
         document.getElementsByClassName("landscape-container")[0].style.webkitTransform = "rotate(-90deg)";
       } else if (tilt < -80 && tilt > -100) {
         self.portrait = false;
         self.landscape = true;
+        document.getElementsByTagName('nav')[0].style.display = "none";
+        document.body.style.background = "#4CCEAD";
         document.getElementsByClassName("portrait-container")[0].style.display = "none";
         document.getElementsByClassName("landscape-container")[0].style.display = "inline-block";
         document.getElementsByClassName("landscape-container")[0].style.webkitTransform = "rotate(90deg)";
       } else {
         self.landscape = false;
         self.portrait = true;
+        document.getElementsByTagName('nav')[0].style.display = "inline-block";
+        document.body.style.background = "#009ACD";
         document.body.style.webkitTransform = "";
         document.getElementsByClassName("landscape-container")[0].style.display = "none";
         document.getElementsByClassName("portrait-container")[0].style.display = "inline-block";
@@ -123,6 +131,7 @@ function WeatherController($http){
       self.getOrientation();
     }
     navigator.geolocation.getCurrentPosition(success);
+    self.wordOfTheDay();
   },
   self.getCity = function() {
     let geocoder = new google.maps.Geocoder;
@@ -236,6 +245,25 @@ function WeatherController($http){
             self.currentUserLocations.push(location.city_state);
           }
         });
+      });
+  },
+  self.wordOfTheDay = function() {
+    let today = new Date();
+    let dd = today.getDate();
+    let mm = today.getMonth()+1;
+    let yyyy = today.getFullYear();
+
+    if (dd<10) { dd = '0'+dd }
+    if (mm<10) { mm = '0'+mm }
+
+    today = yyyy + '-' + mm + '-' + dd;
+    $http
+      .get('http://api.wordnik.com/v4/words.json/wordOfTheDay?date=' + today + '&api_key=a2a73e7b926c924fad7001ca3111acd55af2ffabf50eb4ae5')
+      .then(function(response) {
+        self.word = response.data.word;
+        self.wordDefinition = response.data.definitions[0].text;
+        // console.log(response.data.note);
+        // console.log(response.data.examples);
       });
   }
 }

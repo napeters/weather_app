@@ -11,6 +11,22 @@ nav {
 
 .landscape-container {
   display: none;
+  color: navy;
+  font-family: 'PT Serif', serif;
+  padding-bottom: 20%;
+}
+
+.landscape-container > p {
+  max-width: 55%;
+  margin-left: 20%;
+}
+
+#word {
+  font-size: 65px;
+}
+
+#def {
+  font-size: 45px;
 }
 
 .portrait-container {

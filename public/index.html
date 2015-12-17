@@ -2,7 +2,7 @@
 <html ng-app="WeatherApp">
   <head>
     <meta charset="utf-8">
-    <title>Weather</title>
+    <title>Weathr</title>
     <link href='https://fonts.googleapis.com/css?family=Nunito|PT+Serif' rel='stylesheet' type='text/css'>
     <link rel="stylesheet" type="text/css" href="./css/style.css">
     <script src="scripts/angular/angular.js"></script>
@@ -29,7 +29,8 @@
     </nav>
 
     <div class="landscape-container">
-      SURPRISE
+      <p id="word">{{weather.word}}</p>
+      <p id="def">{{weather.wordDefinition}}</p>
     </div>
 
     <div class="portrait-container">
