@@ -258,7 +258,7 @@ function WeatherController($http){
 
     today = yyyy + '-' + mm + '-' + dd;
     $http
-      .get('http://api.wordnik.com/v4/words.json/wordOfTheDay?date=' + today + '&api_key=a2a73e7b926c924fad7001ca3111acd55af2ffabf50eb4ae5')
+      .get('https://api.wordnik.com/v4/words.json/wordOfTheDay?date=' + today + '&api_key=a2a73e7b926c924fad7001ca3111acd55af2ffabf50eb4ae5')
       .then(function(response) {
         self.word = response.data.word;
         self.wordDefinition = response.data.definitions[0].text;
