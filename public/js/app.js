@@ -24,7 +24,7 @@ function WeatherController($http){
   },
   self.loginUser = function() {
     $http
-      .post('http://localhost:5000/user/login', self.loggingInUser)
+      .post('/user/login', self.loggingInUser)
       .then(function(response){
         self.currentUser = response.data.currentUser;
         self.loggingInUser = {};
@@ -46,7 +46,7 @@ function WeatherController($http){
   },
   self.signupUser = function() {
     $http
-      .post('http://localhost:5000/user/signup', self.newUser)
+      .post('/user/signup', self.newUser)
       .then(function(response){
         self.currentUser = response.data.currentUser;
         self.newUser = {};
@@ -194,7 +194,7 @@ function WeatherController($http){
   },
   self.createLocation = function() {
     $http
-      .post('http://localhost:5000/location', {
+      .post('/location', {
         _userId: self.currentUser._id,
         city_state: self.currentCity,
         lat: self.currentLatitude,
@@ -208,7 +208,7 @@ function WeatherController($http){
     let data = JSON.stringify({params: {here: location}});
     let data_parsed = JSON.parse(data);
     $http
-      .delete('http://localhost:5000/location', data_parsed)
+      .delete('/location', data_parsed)
       .then(function(response) {
         let index = self.currentUserLocations.indexOf(location);
         self.currentUserLocations.splice(index, 1);
@@ -216,7 +216,7 @@ function WeatherController($http){
   },
   self.getCurrentUserLocations = function() {
     $http
-      .get('http://localhost:5000/location')
+      .get('/location')
       .then(function(response) {
         let allLocations = response.data;
         allLocations.forEach(function(location) {
