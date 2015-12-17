@@ -31,14 +31,17 @@ function update(req, res) {
 }
 
 function destroy(req, res) {
-  let locationParams = req.body.location;
-  Location.findOne({ _id: locationParams.id }, function(err, location) {
+  let locationParams = req.query.here;
+  Location.find({ city_state: locationParams }, function(err, locations) {
     if (err) {
       return;
     }
-    location.remove(function (err) {
-      res.send({"record" : "deleted"});
+    locations.forEach(function(location) {
+      location.remove(function (err) {
+        if (err) {throw err};
+      });
     });
+    res.send({"record" : "deleted"});
   });
 }
 

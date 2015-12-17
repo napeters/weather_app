@@ -19,6 +19,10 @@
         <a ng-click="weather.listenToLocation()">(or talk)</a><br>
         <input class="" type="submit" value="Check">
       </form>
+      <div ng-repeat="location in weather.currentUserLocations">
+        <p ng-click="weather.addLocation(location)" method="get">{{location}}</p>
+        <a ng-click="weather.deleteLocation(location)">X</a>
+      </div>
     </nav>
 
     <div class="landscape-container">
@@ -48,7 +52,7 @@
 
       <div ng-show="weather.waiting" class="waiting-gif">
         <p>Grabbing your current weather information</p>
-        <img src="https://www.hashfav.com/assets/img/spinningWheel.gif">
+        <img src="http://www.istandwith.com/images/ellipsis.gif">
       </div>
       <div ng-show="weather.error" class="error">
         <p>{{weather.error}}

@@ -12,7 +12,7 @@ function WeatherController($http){
   self.portrait = true,
   self.newUser = {},
   self.loggingInUser = {},
-  self.currentUser = {},
+  self.currentUser = null,
   self.currentUserLocations = [],
   self.login = false,
   self.loginText = 'Log in',
@@ -142,14 +142,16 @@ function WeatherController($http){
       }
     });
   },
-  self.addLocation = function() {
+  self.addLocation = function(location) {
+    self.error = false;
     self.login = false;
     self.signup = false;
     self.haveWeather = false;
     self.waiting = true;
+    if (self.inputCity == '') {self.inputCity = location};
     $http
       .get('https://api.aerisapi.com/forecasts/closest?p=' +
-            self.inputCity + '&from=today&to=today&client_id=RJtYUCLVJre7MGQmDzVth&client_secret=ll2C8gxAYx51cPoUTqBy3OfaXtDgsf1bJmefjNjt')
+            self.inputCity + '&from=today&to=today&client_id=RJtYUCLVJre7MGQmDzVth&client_secret=gDvmiFtTVvrE3BDxA29ChcKMcpmn58AdgE6nYKGS')
       .then(function(response){
         if (response.data.error) {
           self.waiting = false;
@@ -164,7 +166,7 @@ function WeatherController($http){
           self.feelsLikeTemp = response.data.response[0].periods[0].feelslikeF;
           self.highTemp = response.data.response[0].periods[0].maxTempF;
           self.lowTemp = response.data.response[0].periods[0].minTempF;
-          self.createLocation();
+          if (self.currentUser ) {self.createLocation()};
         }
       });
   },
@@ -173,7 +175,6 @@ function WeatherController($http){
       .get('https://api.aerisapi.com/forecasts/closest?p=' +
             self.currentLatitude + ',' + self.currentLongitude + '&from=today&to=today&client_id=RJtYUCLVJre7MGQmDzVth&client_secret=gDvmiFtTVvrE3BDxA29ChcKMcpmn58AdgE6nYKGS')
       .then(function(response){
-        console.log(response);
         self.waiting = false;
         self.error = null;
         self.haveWeather = true;
@@ -201,6 +202,16 @@ function WeatherController($http){
       })
       .then(function(response) {
         self.currentUserLocations.push(response.data.city_state);
+      });
+  },
+  self.deleteLocation = function(location) {
+    let data = JSON.stringify({params: {here: location}});
+    let data_parsed = JSON.parse(data);
+    $http
+      .delete('http://localhost:5000/location', data_parsed)
+      .then(function(response) {
+        let index = self.currentUserLocations.indexOf(location);
+        self.currentUserLocations.splice(index, 1);
       });
   },
   self.getCurrentUserLocations = function() {
